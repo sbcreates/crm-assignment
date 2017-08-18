@@ -1,10 +1,11 @@
 class Contact
 
-  @@unique_id_gererator = 100
+  @@unique_id = 100
+  @@contact_list = []
 
   # This method should initialize the contact's attributes
   def initialize(first_name, last_name, email, note)
-    @contact_id = (@@unique_id_gererator += 1)
+    @contact_id = (@@unique_id += 1)
     @first_name - first_name
     @last_name - last_name
     @email - email

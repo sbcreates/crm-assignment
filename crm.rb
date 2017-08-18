@@ -61,7 +61,8 @@ class CRM
       else
         note = "N/A"
       end
-    Contact.new(first_name, last_name, email, note)
+    @@contact.list << Contact.new(first_name, last_name, email, note)
+
   end
 
   def modify_existing_contact
