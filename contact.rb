@@ -65,8 +65,10 @@ class Contact
 
   # This method should accept an id as an argument
   # and return the contact who has that id
-  def self.find(input_id)
+  def self.find
     contact = {}
+    puts "Enter Contact ID"
+    input_id = gets.to_i
     @@contact_list.each do |id|
       if input_id == id.contact_id
         contact = id
@@ -159,7 +161,7 @@ class Contact
 
   # This method should delete the contact
   # HINT: Check the Array class docs for built-in methods that might be useful here
-  def delete
+  def delete(user)
     @@contact_list.delete(user)
   end
 

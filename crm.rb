@@ -60,13 +60,13 @@ class CRM
         note = "N/A"
       end
     Contact.create(first_name, last_name, email, note)
-    puts Contact.all
+    puts Contact.all.inspect
   end
 
 # This method should prompt user to enter an id for the contact to be modified. When id is entered, user is then prompted to select which attribute needs to be changed.
   def modify_existing_contact
     user = {}
-    puts "User ID?"
+    puts "Enter Contact ID"
     search_id = gets.to_i
     Contact.all.each do |person|
       if person.contact_id == search_id
@@ -81,20 +81,20 @@ class CRM
 # This method should prompt user to enter the id of the contact they want to delete.
   def delete_contact
     user = {}
-    puts "User ID?"
+    puts "Enter Contact ID"
     search_id = gets.to_i
     Contact.all.each do |person|
-      if person.contact_id == search_id
-        user = person
+      if search_id == person.contact_id
+        Contact.all.delete(person)
       end
     end
-    puts user
-    user.delete
+    puts Contact.all.inspect
   end
 
 #This method should show all of the contacts that exist
   def display_all_contacts
-    Contact.all
+    puts Contact.all.inspect
+    main_menu
   end
 
 # This method should prompt user to select whic attribute they want to search by. When they choose, they are prompted to enter the search term. When they enter their search term, they should then be presented with the first contact who matches my search.
@@ -110,7 +110,7 @@ class CRM
     when 1 then Contact.find_by(1)
     when 2 then Contact.find_by(2)
     when 3 then Contact.find_by(3)
-    when 4 then Contact.find(4)
+    when 4 then Contact.find
     end
   end
 
