@@ -1,5 +1,5 @@
 require 'pry'
-require_relative ('contact')
+require_relative('contact.rb')
 
 class CRM
 
@@ -13,20 +13,10 @@ class CRM
 
 #Want to print the main menu and tell the crm what to do depending on user selection.
   def main_menu
-    print_main_menu
-    user_menu_input = gets.to_i
-    if user_menu_input == 1
-      add_new_contact
-    elsif user_menu_input == 2
-      modify_existing_contact
-    elsif user_menu_input == 3
-      delete_contact
-    elsif user_menu_input == 4
-      display_all_contacts
-    elsif user_menu_input == 5
-      search_by_attribute
-    elsif user_menu_input == 6
-      "Good_bye"
+    while true
+      print_main_menu
+      user_menu_input = gets.to_i
+      call_option(user_menu_input)
     end
   end
 
@@ -34,60 +24,80 @@ class CRM
   def print_main_menu
     p "Main Menu"
     p "*-------*"
-    p "1  Add New Contact"
-    p "2  Modify Contact"
-    p "3  Delete Contact"
-    p "4  Display All Contacts"
-    p "5  Search by Attribute"
-    p "6  Exit"
+    p "[1]  Add New Contact"
+    p "[2]  Modify Contact"
+    p "[3]  Delete Contact"
+    p "[4]  Display All Contacts"
+    p "[5]  Search by Attribute"
+    p "[6]  Exit"
+    p "Enter a number"
   end
 
-  def call_option
-
+  def call_option(user_menu_input)
+    case user_menu_input
+    when 1 then add_new_contact
+    when 2 then modify_existing_contact
+    when 3 then delete_contact
+    when 4 then display_all_contacts
+    when 5 then search_by_attribute
+    else        exit
+    end
   end
 
   def add_new_contact
-    p "Contact's first name?"
+    puts "Contact's first name?"
       first_name = gets.chomp.to_s
-    p "Contact's last name?"
+    puts "Contact's last name?"
       last_name = gets.chomp.to_s
-    p "Contact's e-mail?"
+    puts "Contact's e-mail?"
       email = gets.chomp.to_s
-    p "Any notes about contact? (y/n)"
+    puts "Any notes about contact? (y/n)"
       user_input = gets.chomp.to_s
       if user_input == "y"
-        p "Enter a note about contact"
+        puts "Enter a note about contact"
         note = gets.chomp.to_s
       else
         note = "N/A"
       end
-    @@contact.list << Contact.new(first_name, last_name, email, note)
-
+    Contact.create(first_name, last_name, email, note)
+    p Contact.all
   end
 
+# This method should prompt user to enter an id for the contact to be modified. When id is entered, user is then prompted to select which attribute needs to be changed.
   def modify_existing_contact
-    p "User ID?"
-      contact_id = gets.chomp.to_s
-
+    user = {}
+    puts "User ID?"
+    search_id = gets.to_i
+    Contact.all.each do |person|
+      if person.contact_id == search_id
+        user = person
+      end
+    end
+    puts user
+    user.update
   end
 
+
+# This method should prompt user to enter the id of the contact they want to delete.
   def delete_contact
 
   end
 
+#This method should show all of the contacts that exist
   def display_all_contacts
-
+    Contact.all
   end
 
+# This method should prompt user to select whic attribute they want to search by. When they choose, they are prompted to enter the search term. When they enter their search term, they should then be presented with the first contact who matches my search.
   def search_by_attribute
 
   end
 
-  def user_id
-    @user_id
-  end
-
-
 end
 
-carrie = CRM.new
+CRM.new
+p Contact.all
+p Contact.inspect
+Contact.create("A", "B", "C", "N/A")
+Contact.create("B", "C", "D", "N/A")
+Contact.create("C", "D", "E", "N/A")
