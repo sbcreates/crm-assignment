@@ -59,8 +59,12 @@ class CRM
       else
         note = "N/A"
       end
-    Contact.create(first_name, last_name, email, note)
-    puts Contact.all.inspect
+    contact = Contact.create(
+      first_name: first_name,
+      last_name: last_name,
+      email: email,
+      note: note
+    )
   end
 
 # This method should prompt user to enter an id for the contact to be modified. When id is entered, user is then prompted to select which attribute needs to be changed.
@@ -115,6 +119,8 @@ class CRM
   end
 
 end
+
+CRM.new
 
 at_exit do
   ActiveRecord::Base.connection.close
