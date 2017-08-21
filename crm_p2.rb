@@ -22,15 +22,15 @@ class CRM
 
 #Print out the options for the user to choose from in main menu.
   def print_main_menu
-    puts "Main Menu"
-    puts "*-------*"
-    puts "[1]  Add New Contact"
-    puts "[2]  Modify Contact"
-    puts "[3]  Delete Contact"
-    puts "[4]  Display All Contacts"
-    puts "[5]  Search by Attribute"
-    puts "[6]  Exit"
-    puts "Enter a number"
+    p "Main Menu"
+    p "*-------*"
+    p "[1]  Add New Contact"
+    p "[2]  Modify Contact"
+    p "[3]  Delete Contact"
+    p "[4]  Display All Contacts"
+    p "[5]  Search by Attribute"
+    p "[6]  Exit"
+    p "Enter a number"
   end
 
   def call_option(user_menu_input)
@@ -60,7 +60,7 @@ class CRM
         note = "N/A"
       end
     Contact.create(first_name, last_name, email, note)
-    puts Contact.all
+    p Contact.all
   end
 
 # This method should prompt user to enter an id for the contact to be modified. When id is entered, user is then prompted to select which attribute needs to be changed.
@@ -89,7 +89,7 @@ class CRM
       end
     end
     puts user
-    user.delete
+    delete(user)
   end
 
 #This method should show all of the contacts that exist
@@ -99,23 +99,14 @@ class CRM
 
 # This method should prompt user to select whic attribute they want to search by. When they choose, they are prompted to enter the search term. When they enter their search term, they should then be presented with the first contact who matches my search.
   def search_by_attribute
-    puts "Search By"
-    puts "[1]  First Name"
-    puts "[2]  Last Name"
-    puts "[3]  E-mail"
-    puts "[4]  Contact ID"
-    puts "Enter a number"
-    user_search_by = gets.to_i
-    case user_search_by
-    when 1 then Contact.find_by(1)
-    when 2 then Contact.find_by(2)
-    when 3 then Contact.find_by(3)
-    when 4 then Contact.find(4)
-    end
+
   end
 
 end
 
 CRM.new
-puts Contact.all
-puts Contact.inspect
+p Contact.all
+p Contact.inspect
+Contact.create("A", "B", "C", "N/A")
+Contact.create("B", "C", "D", "N/A")
+Contact.create("C", "D", "E", "N/A")

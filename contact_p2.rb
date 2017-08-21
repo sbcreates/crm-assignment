@@ -1,7 +1,4 @@
-class Contact
-
-  @@unique_id = 100
-  @@contact_list = []
+class Contact < ActiveRecord::Base
 
   # This method should initialize the contact's attributes
   def initialize(first_name, last_name, email, note)
@@ -10,44 +7,6 @@ class Contact
     @last_name = last_name
     @email = email
     @note = note
-  end
-
-  #READERS
-  def contact_id
-    @contact_id
-  end
-
-  def first_name
-    @first_name
-  end
-
-  def last_name
-    @last_name
-  end
-
-  def email
-    @email
-  end
-
-  def note
-    @note
-  end
-
-  #WRITERS
-  def edit_first_name=(new_first_name)
-    @first_name = new_first_name
-  end
-
-  def edit_last_name=(new_last_name)
-    @last_name = new_last_name
-  end
-
-  def edit_email=(new_email)
-    @email = new_email
-  end
-
-  def edit_note=(new_note)
-    @note = new_note
   end
 
   # This method should call the initializer,
@@ -66,13 +25,11 @@ class Contact
   # This method should accept an id as an argument
   # and return the contact who has that id
   def self.find(input_id)
-    contact = {}
     @@contact_list.each do |id|
       if input_id == id.contact_id
-        contact = id
+        p id.full_name
       end
     end
-    puts contact
   end
 
   # This method should allow you to specify
@@ -80,12 +37,12 @@ class Contact
   # 2. the new value for that attribute
   # and then make the appropriate change to the contact
   def print_update
-    puts "Attribute to Change"
-    puts "[1]  First Name"
-    puts "[2]  Last Name"
-    puts "[3]  E-mail"
-    puts "[4]  Note"
-    puts "Enter a number"
+    p "Attribute to Change"
+    p "[1]  First Name"
+    p "[2]  Last Name"
+    p "[3]  E-mail"
+    p "[4]  Note"
+    p "Enter a number"
   end
 
   def update
@@ -95,56 +52,47 @@ class Contact
     when 1
       puts "Enter First Name"
       new_first_name = gets.chomp
-      @first_name = new_first_name
+      edit_first_name=(new_first_name)
     when 2
       puts "Enter Last Name"
       new_last_name = gets.chomp
-      @last_name = new_last_name
+      edit_last_name=(new_last_name)
     when 3
       puts "Enter E-mail"
       new_email = gets.chomp
-      @edit_email = new_email
+      edit_email=(new_email)
     when 4
       puts "Enter Note"
       new_note = gets.chomp
-      @edit_note = new_note
+      edit_note=(new_note)
     else        exit
     end
-    puts Contact.all
+    p Contact.all
+  end
+
+  def print_find_by
+    p "Search by Attribue"
+    p "[1]  First Name"
+    p "[2]  Last Name"
+    p "[3]  E-mail"
   end
 
   # This method should work similarly to the find method above
   # but it should allow you to search for a contact using attributes other than id
   # by specifying both the name of the attribute and the value
   # eg. searching for 'first_name', 'Betty' should return the first contact named Betty
-  def self.find_by(search_by)
-    contact = {}
-    case search_by
-    when 1 then
-      puts "Enter First Name"
+  def self.find_by
+    print_find_by
+    user_input = gets.to_i
+    case user_input
+    when 1
+      p "Enter First Name"
       search_first_name = gets.chomp
-      @@contact_list.each do |first_name|
-        if search_first_name == first_name.first_name
-          contact = first_name
-        end
-      end
-    when 2 then
-      puts "Enter Last Name"
-      search_last_name = gets.chomp
-      @@contact_list.each do |last_name|
-        if search_last_name == last_name.last_name
-          contact = last_name
-        end
-      end
-    when 3 then
-      puts "Enter Email"
-      search_email = gets.chomp
-      @@contact_list.each do |email|
-        if search_email == email.email
-          contact = email
-        end
-      end
-      puts contact.inspect
+    when 2
+      p "Enter Last Name"
+
+    when 3
+      p "Enter Email"
     end
   end
 
