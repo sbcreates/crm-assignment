@@ -1,5 +1,5 @@
-require 'pry'
-require_relative('contact.rb')
+
+require_relative('contact_p2.rb')
 
 class CRM
 
@@ -116,6 +116,6 @@ class CRM
 
 end
 
-CRM.new
-puts Contact.all
-puts Contact.inspect
+at_exit do
+  ActiveRecord::Base.connection.close
+end
