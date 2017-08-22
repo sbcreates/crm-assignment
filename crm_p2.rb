@@ -86,11 +86,11 @@ class CRM
     when 1 then
       puts "Enter First Name"
       edit_first_name = gets.chomp
-      contact.update_attribute(first_name, edit_first_name)
+      contact.update_attribute(first_name: edit_first_name)
     when 2 then
       puts "Enter Last Name"
       edit_last_name = gets.chomp
-      contact.update_attribute(last_name, edit_last_name)
+      contact.update_attribute(last_name: edit_last_name)
     when 3 then
       puts "Enter E-mail"
       edit_email = gets.chomp
