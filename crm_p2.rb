@@ -1,4 +1,4 @@
-
+require 'pry'
 require_relative('contact_p2.rb')
 
 class CRM
@@ -68,31 +68,49 @@ class CRM
   end
 
 # This method should prompt user to enter an id for the contact to be modified. When id is entered, user is then prompted to select which attribute needs to be changed.
+# ****************
   def modify_existing_contact
-    user = {}
     puts "Enter Contact ID"
-    search_id = gets.to_i
-    Contact.all.each do |person|
-      if person.contact_id == search_id
-        user = person
-      end
+    id = gets.chomp
+    contact = Contact.find_by(id: id)
+# contact variable contains the contact that we want to modify
+    puts "Modify Options"
+    puts "[1]  First Name"
+    puts "[2]  Last Name"
+    puts "[3]  Email"
+    puts "[4]  Note"
+    puts "[5]  Exit"
+    to_modify = gets.to_i
+    binding.pry
+    case to_modify
+    when 1 then
+      puts "Enter First Name"
+      edit_first_name = gets.chomp
+      contact.update_attribute(first_name, edit_first_name)
+    when 2 then
+      puts "Enter Last Name"
+      edit_last_name = gets.chomp
+      contact.update_attribute(last_name, edit_last_name)
+    when 3 then
+      puts "Enter E-mail"
+      edit_email = gets.chomp
+      contact.update_attribute(email: edit_email)
+    when 4 then
+      puts "Enter Note"
+      edit_note = gets.chomp
+      contact.update_attribute(note: edit_note)
+    else
+      exit
     end
-    puts user
-    user.update
   end
 
 
 # This method should prompt user to enter the id of the contact they want to delete.
   def delete_contact
-    user = {}
     puts "Enter Contact ID"
     search_id = gets.to_i
-    Contact.all.each do |person|
-      if search_id == person.contact_id
-        Contact.all.delete(person)
-      end
-    end
-    puts Contact.all.inspect
+    contact = Contact.find(search_id)
+    contact.delete
   end
 
 #This method should show all of the contacts that exist
@@ -102,19 +120,39 @@ class CRM
   end
 
 # This method should prompt user to select whic attribute they want to search by. When they choose, they are prompted to enter the search term. When they enter their search term, they should then be presented with the first contact who matches my search.
+ # ****************
   def search_by_attribute
     puts "Search By"
     puts "[1]  First Name"
     puts "[2]  Last Name"
     puts "[3]  E-mail"
     puts "[4]  Contact ID"
+    puts "[5]  Exit"
     puts "Enter a number"
     user_search_by = gets.to_i
     case user_search_by
-    when 1 then Contact.find_by(1)
-    when 2 then Contact.find_by(2)
-    when 3 then Contact.find_by(3)
-    when 4 then Contact.find
+    when 1 then
+      puts "Enter First Name"
+      first_name = gets.chomp
+      contact = Contact.find_by(first_name: first_name)
+      puts contact.inspect
+    when 2 then
+      puts "Enter Last Name"
+      last_name = gets.chomp
+      contact = Contact.find_by(last_name: last_name)
+      puts contact.inspect
+    when 3 then
+      puts "Enter E-mail"
+      email = gets.chomp
+      contact = Contact.find_by(email: email)
+      puts contact.inspect
+    when 4 then
+      puts "Enter User ID"
+      id = gets.chomp
+      contact = Contact.find_by(id: id)
+      puts contact.inspect
+    else
+      exit
     end
   end
 
